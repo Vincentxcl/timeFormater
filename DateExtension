@@ -1,0 +1,22 @@
+		Date.prototype.Format = function (format) {
+			var ele = {
+				"M+": this.getMonth() + 1,
+				"d+": this.getDate(),
+				"h+": this.getHours(),
+				"m+": this.getMinutes(),
+				"s+": this.getSeconds(),
+				"q+": Math.floor((this.getMonth() + 3) / 3),
+				"S": this.getMilliseconds()
+			};
+			if (new RegExp(/(y+)/).test(format)) {
+				var _year = this.getFullYear().toString().substr(4 - RegExp.$1.length)
+				format = format.replace(RegExp.$1, _year);
+			}
+			for (var k in ele) {
+				if (new RegExp("(" + k + ")").test(format)) {
+					var _f = RegExp.$1.length == 1 ? (ele[k]) : (("00" + ele[k]).substr(ele[k].toString().length));
+					format = format.replace(RegExp.$1, _f);
+				}
+			}
+			return format;
+		}
